@@ -1,5 +1,5 @@
 # Program name
-NAME		= fixed
+NAME		= better_fixed
 
 # Compiler and flags
 CXX			= c++

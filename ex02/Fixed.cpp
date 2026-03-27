@@ -4,20 +4,20 @@
 
 Fixed::Fixed(void)
 {
-	std::cout << "Default constructor called" << std::endl;
+	//std::cout << "Default constructor called" << std::endl;
 	this->_fixedPointValue = 0;
 
 }
 
 Fixed::Fixed(const Fixed &source)
 {
-	std::cout << "Copy constructor called" << std::endl;
+	//std::cout << "Copy constructor called" << std::endl;
 	*this = source;
 }
 
 Fixed& Fixed::operator=(const Fixed &source)
 {
-	std::cout << "Copy assignment operator called" << std::endl;
+	//std::cout << "Copy assignment operator called" << std::endl;
 	if (this != &source)
 	{
 		this->_fixedPointValue = source.getRawBits();
@@ -27,7 +27,7 @@ Fixed& Fixed::operator=(const Fixed &source)
 
 Fixed::~Fixed(void)
 {
-	std::cout << "Destructor called" << std::endl;
+	//std::cout << "Destructor called" << std::endl;
 }
 /*
 	CONSTRUCTOR OVERLOADING:
@@ -38,7 +38,7 @@ Fixed::~Fixed(void)
 
 Fixed::Fixed(int const val)
 {
-	std::cout << "Int constructor called" << std::endl;
+	//std::cout << "Int constructor called" << std::endl;
 	this->_fixedPointValue = val << this->_fractionalBits;
 	/*
 		int to fixed: bit-shift the int 8 to the left
@@ -48,7 +48,7 @@ Fixed::Fixed(int const val)
 
 Fixed::Fixed(float const val)
 {
-	std::cout << "Float constructor called" << std::endl;
+	//std::cout << "Float constructor called" << std::endl;
 	this->_fixedPointValue = roundf(val * (1 << this->_fractionalBits));
 	/*
 		float to fixed: float * 256 (same as 1 << 8), rounded to
@@ -142,3 +142,85 @@ Fixed	Fixed::operator/(const Fixed &right) const
 {
 	return Fixed(this->toFloat() / right.toFloat());
 }
+
+/*
+	Pre-increment operator: increments original object, then returns it
+*/
+Fixed&	Fixed::operator++(void)
+{
+	this->_fixedPointValue++;
+	return *this;
+}
+
+/*
+	Post-increment operator: returns non-incremented value
+	Dummy parameter differentiates between pre and post increment operator.
+	Because it is unnamed, it avoids the unused parameter compiler error.
+*/
+Fixed	Fixed::operator++(int)
+{
+	Fixed temp(*this); //copy constructor call to save pre-increment state
+	this->_fixedPointValue++; //increment original object
+	return temp; //return copied previous state by value
+}
+
+//	Pre-decrement operator: decrements original object, then returns it
+Fixed&	Fixed::operator--(void)
+{
+	this->_fixedPointValue--;
+	return *this;
+}
+
+/*
+	Post-decrement operator: return non-decremented value
+	Dummy parameter differentiates between pre and post decrement operator.
+	Because it is unnamed, it avoids the unused parameter compiler error.
+*/
+
+Fixed	Fixed::operator--(int)
+{
+	Fixed temp(*this);
+	this->_fixedPointValue--;
+	return temp;
+}
+
+/*
+	Min and max functions use the overloaded < and > operators
+	to compare the values of fixed objects a and b, so the code
+	here is simple.
+
+	NOTES:
+	-No static keyword in function implementation
+	-Scope resolution Fixed:: still needed, since these aren't
+	stand-alone functions but belong to the Fixed class blueprint
+
+*/
+
+Fixed& Fixed::min(Fixed &a, Fixed &b)
+{
+	if (a < b)
+		return a;
+	return b;
+}
+
+const Fixed& Fixed::min(const Fixed &a, const Fixed &b)
+{
+	if (a < b)
+		return a;
+	return b;
+}
+
+ Fixed& Fixed::max(Fixed &a, Fixed &b)
+{
+	if (a > b)
+		return a;
+	return b;
+}
+
+ const Fixed& Fixed::max(const Fixed &a, const Fixed &b)
+{
+	if (a > b)
+		return a;
+	return b;
+}
+

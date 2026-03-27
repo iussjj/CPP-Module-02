@@ -37,6 +37,22 @@ public:
 	Fixed operator*(const Fixed &right) const;
 	Fixed operator/(const Fixed &right) const;
 
+	//increments
+	Fixed &operator++(void); //pre-increment
+	Fixed operator++(int); //post-increment with dummy parameter
+	Fixed &operator--(void); //pre-decrement
+	Fixed operator--(int); //post-decrement with dummy parameter
+
+	/*
+		min/max functions
+		Static here means that the functions are tied to the class
+		blueprint, not a specific object. They are called like this:
+		Fixed:max(a, b) NOT like a.max(a, b)
+	*/
+	static Fixed& min(Fixed &a, Fixed &b);
+	static const Fixed& min(const Fixed &a, const Fixed &b);
+	static Fixed& max(Fixed &a, Fixed &b);
+	static const Fixed& max(const Fixed &a, const Fixed &b);
 };
 
 std::ostream &operator<<(std::ostream &out, const Fixed &source);
