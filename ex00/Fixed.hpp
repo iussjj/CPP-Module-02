@@ -7,6 +7,14 @@
 
 	-The copy assignment operator overwrites an existing object's values
 	with the values of another object passed to it as a parameter.
+
+	NOTE: static const int	_fractionalBits = 8;
+	static = variable is shared across all objects of this class
+	const = read only
+
+	!MEMBER VARIABLES MAY ONLY BE INITIALIZED IN THE CLASS BLUEPRINT
+	!WHEN THEY ARE 1. THEY ARE STATIC 2. THEY ARE CONST 3. THEY ARE INTEGRAL
+	!TYPES LIKE INT, CHAR, BOOL (NOT FLOAT!)
 */
 
 class Fixed

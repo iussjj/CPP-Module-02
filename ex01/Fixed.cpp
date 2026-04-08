@@ -68,9 +68,15 @@ void Fixed::setRawBits(int const raw)
 	this->_fixedPointValue = raw;
 }
 
+/*
+	!THIS IS NOT THE WAY: (float)this->_fixedPointValue
+	The C++ Way (🇩🇰): static_cast<float>(this->_fixedPointValue)
+*/
+
 float	Fixed::toFloat(void) const
 {
-	return (float)this->_fixedPointValue / (float)(1 << this->_fractionalBits);
+	return static_cast<float>(this->_fixedPointValue)
+		/ static_cast<float>(1 << this->_fractionalBits);
 }
 
 int		Fixed::toInt(void) const
